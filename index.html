@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OddsEngine Docs</title>
+<meta name="description" content="How OddsEngine works: the calls, the record, the $ODDS key on Robinhood Chain, wallets, tiers and the rules.">
+<meta name="theme-color" content="#05070b">
+<link rel="canonical" href="https://docs.oddsengine.live/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OddsEngine Docs">
+<meta property="og:description" content="How the engine makes a call, how every result gets scored, and how $ODDS unlocks every call live.">
+<meta property="og:image" content="https://docs.oddsengine.live/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://docs.oddsengine.live/og-image.jpg">
+<link rel="icon" href="ring.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script>
+  window.ODDSENGINE_API = "https://web-production-6b61c.up.railway.app";
+  // After launch: paste the $ODDS contract address here (0x...). Empty = "launching soon".
+  window.ODDS_CA = "";
+</script>
+<style>
+:root{
+  --bg:#05070b; --bg2:#0a0e15; --card:rgba(255,255,255,.04); --line:rgba(255,255,255,.10);
+  --tx:#eef2f7; --dim:#a3adbb; --dim2:#6f7a89;
+  --blue:#0878f0; --blue2:#4aa3ff; --mint:#5ee0c3; --red:#ff6b6b; --amber:#ffb547;
+  --disp:'Unbounded',system-ui,sans-serif; --body:'Instrument Sans',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;padding-top:58px;background:var(--bg);color:var(--tx);font-family:var(--body);font-size:16.5px;line-height:1.65;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:var(--blue2);text-decoration:none}
+a:hover{color:#8cc4ff;text-decoration:underline}
+.aurora{position:fixed;inset:-20vh -20vw auto;height:80vh;z-index:0;pointer-events:none;filter:blur(70px);opacity:.55;
+  background:radial-gradient(35% 45% at 20% 30%,rgba(8,120,240,.35),transparent 70%),
+             radial-gradient(30% 40% at 85% 15%,rgba(94,224,195,.14),transparent 70%)}
+.top{position:fixed;top:0;left:0;right:0;z-index:30;background:rgba(5,7,11,.85);border-bottom:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.top .in{max-width:1180px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:9px;color:var(--tx);font-family:var(--disp);font-weight:800;font-size:13px;letter-spacing:.04em}
+.brand img{width:24px;height:24px}
+.brand small{font-family:var(--mono);font-weight:500;color:var(--dim2);font-size:11px;letter-spacing:.1em;margin-left:4px}
+.sp{flex:1}
+.pill{white-space:nowrap;display:inline-flex;align-items:center;min-height:38px;padding:0 15px;border-radius:999px;border:1px solid var(--line);color:var(--tx);font-size:13.5px;font-weight:600}
+.pill:hover{background:rgba(255,255,255,.07);text-decoration:none;color:var(--tx)}
+.pill.blue{background:var(--blue);border-color:var(--blue)}
+.pill.blue:hover{background:#1c86f5}
+#menuBtn{display:none}
+.layout{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.side{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 90px);overflow:auto;padding:28px 0 40px}
+nav.side h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--dim2);margin:18px 0 6px;font-weight:700}
+nav.side a{display:block;color:var(--dim);font-size:14.5px;padding:5px 10px;border-radius:8px;border-left:2px solid transparent}
+nav.side a:hover{color:var(--tx);background:rgba(255,255,255,.05);text-decoration:none}
+nav.side a.on{color:var(--tx);border-left-color:var(--blue2);background:rgba(74,163,255,.08)}
+main{padding:36px 0 90px;min-width:0}
+.hero{padding:18px 0 10px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--blue2)}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(30px,5vw,46px);line-height:1.08;margin:10px 0 14px;letter-spacing:-.01em}
+.lead{color:var(--dim);font-size:18px;max-width:720px;margin:0}
+section{padding-top:44px;scroll-margin-top:80px}
+h2{font-family:var(--disp);font-weight:800;font-size:23px;line-height:1.2;margin:0 0 14px}
+h2 .n{font-family:var(--mono);font-size:12px;color:var(--blue2);display:block;letter-spacing:.14em;margin-bottom:6px;font-weight:700}
+h3{font-size:17px;margin:24px 0 6px;font-weight:600}
+p{margin:0 0 14px;max-width:760px}
+ul,ol{margin:0 0 14px;padding-left:22px;max-width:760px}
+li{margin:4px 0}
+.dim{color:var(--dim)}
+code,.mono{font-family:var(--mono);font-size:.88em}
+code{background:rgba(255,255,255,.06);border:1px solid var(--line);padding:1px 6px;border-radius:6px;word-break:break-all}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:16px 0;max-width:760px}
+.card.blue{border-color:rgba(74,163,255,.35);background:rgba(8,120,240,.07)}
+.card.amber{border-color:rgba(255,181,71,.35);background:rgba(255,181,71,.06)}
+.call{font-family:var(--mono);font-size:13.5px;line-height:1.7;white-space:pre-wrap;color:#dfe7f2}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:760px;margin:16px 0}
+.tier{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.tier.hot{border-color:rgba(74,163,255,.5);box-shadow:0 0 0 1px rgba(74,163,255,.15),0 10px 40px rgba(8,120,240,.15)}
+.tier b{font-family:var(--disp);font-size:15px;display:block}
+.tier .p{font-family:var(--mono);color:var(--blue2);font-size:13px;margin:4px 0 8px}
+.tier ul{padding-left:18px;font-size:14.5px;color:var(--dim);margin:0}
+table{border-collapse:collapse;width:100%;max-width:760px;margin:14px 0;font-size:14.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--dim2);font-weight:700}
+td:first-child{color:var(--dim);white-space:nowrap}
+.ca{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ca code{font-size:13px;padding:6px 10px}
+button.pill{background:transparent;cursor:pointer;font-family:var(--body)}
+details{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0;max-width:760px;background:var(--card)}
+details summary{cursor:pointer;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";float:right;color:var(--blue2);font-family:var(--mono)}
+details[open] summary::after{content:"×"}
+details p{margin:10px 0 2px}
+footer{position:relative;z-index:2;border-top:1px solid var(--line);color:var(--dim2);font-size:13.5px}
+footer .in{max-width:1180px;margin:0 auto;padding:22px 20px;display:flex;flex-wrap:wrap;gap:14px}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  nav.side{position:fixed;top:57px;left:0;right:0;bottom:0;max-height:none;background:rgba(5,7,11,.97);padding:10px 20px 40px;display:none;z-index:25}
+  nav.side.open{display:block}
+  #menuBtn{display:inline-flex}
+  .tiers{grid-template-columns:1fr}
+  .hide-s{display:none}
+  .top .in{padding:8px 16px;gap:8px}
+  .pill{min-height:36px;padding:0 13px;font-size:13px}
+  .brand small{display:none}
+  nav.side{top:53px}
+  .layout{padding:0 16px}
+  td:first-child{white-space:normal}
+}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+<header class="top"><div class="in">
+  <a class="brand" href="#top"><img src="ring.png" alt="">ODDSENGINE <small>DOCS</small></a>
+  <span class="sp"></span>
+  <a class="pill hide-s" href="https://oddsengine.live">Website</a>
+  <a class="pill blue" href="https://public.oddsengine.live">Open app</a>
+  <button class="pill" id="menuBtn" type="button" aria-expanded="false" aria-controls="side">Menu</button>
+</div></header>
+
+<div class="layout" id="top">
+<nav class="side" id="side" aria-label="Docs">
+  <h4>START</h4>
+  <a href="#what">What it is</a>
+  <a href="#call">How to read a call</a>
+  <a href="#results">How results are scored</a>
+  <h4>$ODDS</h4>
+  <a href="#odds">The key</a>
+  <a href="#tiers">Tiers</a>
+  <a href="#buy">Buy on Torch</a>
+  <a href="#wallet">Wallet setup</a>
+  <a href="#verify">Verify in the app</a>
+  <h4>TRADING</h4>
+  <a href="#polymarket">Bet on Polymarket</a>
+  <a href="#engine">How the engine works</a>
+  <h4>MORE</h4>
+  <a href="#faq">FAQ</a>
+  <a href="#risk">Risks</a>
+  <a href="#terms">Terms</a>
+</nav>
+
+<main>
+  <div class="hero">
+    <div class="eyebrow">DOCUMENTATION</div>
+    <h1>How OddsEngine works.</h1>
+    <p class="lead">An engine that forecasts the daily high in about 50 cities and compares it with the prices on Polymarket. When the market looks off, it makes a call. Every result gets posted, hit or miss.</p>
+  </div>
+
+  <section id="what">
+    <h2><span class="n">01</span>What it is</h2>
+    <p>Polymarket runs a market every day on how hot it gets in cities like Paris, Seoul, Chicago or Madrid. Each market is split into temperature fields: 17°C, 18°C, 19°C and so on. Whatever the official weather station reports at the end of the day wins.</p>
+    <p>OddsEngine reads several weather models for the exact station the market uses, turns them into a probability for every field and compares that with the price. Most markets are priced about right, so most of the time the engine stays quiet. When the price is clearly lower than what the engine expects, it makes a call.</p>
+    <p>That is the whole product. It does the math, it posts the call before the station reports, and it scores itself in public.</p>
+  </section>
+
+  <section id="call">
+    <h2><span class="n">02</span>How to read a call</h2>
+    <div class="card"><div class="call">🌡️ MADRID · Oct 9 · daily high
+
+Block: 19 / 20 / 21°C
+Price 77c · engine says 82%
+Pays 1.30x if the high lands in the block.</div></div>
+    <ul>
+      <li><b>Block</b>: the fields the engine buys together. If the official high lands in any of them, the call hits.</li>
+      <li><b>Price</b>: what the whole block costs, in cents per dollar of payout. 77c means you pay 77 cents and get 1 dollar back if it hits.</li>
+      <li><b>Engine says</b>: how likely the engine thinks the block is to hit, after its own safety discount (see <a href="#engine">how the engine works</a>).</li>
+      <li><b>Pays</b>: what you get back per dollar if the call hits. 1.30x means 1 dollar becomes 1.30.</li>
+    </ul>
+    <p>A call only goes out when the engine's number is clearly above the price. In the app, holders also see how to split a stake across the fields, so every field pays the same if it wins.</p>
+  </section>
+
+  <section id="results">
+    <h2><span class="n">03</span>How results are scored</h2>
+    <p>Every call is saved with the time it went out, the block and the price. After the station reports, the result is posted, no matter how it went.</p>
+    <ul>
+      <li><b>The free call of the day</b> gets its result as a quote of the original post on X and as a reply under the call on Telegram. You always see the call and the result together.</li>
+      <li><b>Calls that were only in the app</b> are collected once a day into one summary post: every city, every hit, every miss.</li>
+      <li>The running record in every result counts all calls since the current rules started on Sep 25, 2026.</li>
+    </ul>
+    <p>The full list, with block, price and outcome for each call, is in the app under Record. Nothing gets deleted.</p>
+  </section>
+
+  <section id="odds">
+    <h2><span class="n">04</span>$ODDS is the key</h2>
+    <p>$ODDS is an access token on Robinhood Chain. Hold enough of it in your wallet and the app shows you every call live, the moment it fires. Without it you get one free call a day plus all the results.</p>
+    <p>No staking, no lockups, no subscription. The app checks your wallet balance about every two minutes. If you sell below the line, the calls lock again.</p>
+    <div class="card blue">
+      <div class="mono dim" style="font-size:12px;letter-spacing:.12em">CONTRACT · ROBINHOOD CHAIN</div>
+      <div class="ca" style="margin-top:8px"><code id="ca">Launching soon on Torch</code><button class="pill" id="copyca" type="button" hidden>Copy</button><a class="pill blue" id="buyca" href="#buy">Buy on Torch</a></div>
+      <p class="dim" style="margin:10px 0 0;font-size:14.5px">Only trust the address shown here, on oddsengine.live and in the app. Anyone sending you a different one is not us.</p>
+    </div>
+  </section>
+
+  <section id="tiers">
+    <h2><span class="n">05</span>Tiers</h2>
+    <div class="tiers">
+      <div class="tier"><b>No token</b><div class="p">free</div><ul><li>1 free call a day on X and Telegram</li><li>Every result, hit or miss</li><li>The full record</li></ul></div>
+      <div class="tier hot"><b>Holder</b><div class="p">hold <span id="tHold">$100</span> in $ODDS</div><ul><li>Every call, live</li><li>The stake split for every block</li><li>One tap to the market on Polymarket</li></ul></div>
+      <div class="tier"><b>Pro</b><div class="p">hold <span id="tPro">$1,000</span> in $ODDS</div><ul><li>Everything in Holder</li><li>The engine board: engine vs market for every open city</li><li>Monthly pass, coming soon</li></ul></div>
+    </div>
+    <p>The value is counted in dollars at the current $ODDS price. To stop people flipping in and out on every small price move, a tier you reached stays yours as long as you still hold at least 70% of its line.</p>
+  </section>
+
+  <section id="buy">
+    <h2><span class="n">06</span>Buy $ODDS on Torch</h2>
+    <ol>
+      <li>Set up a wallet you control and add Robinhood Chain (next section).</li>
+      <li>Get a little ETH onto Robinhood Chain, for example with the Deposit button on Torch or a bridge you trust.</li>
+      <li>Open <a href="https://app.torchpad.fun" target="_blank" rel="noopener">app.torchpad.fun</a>, connect your wallet and buy $ODDS. Check the contract address against the one above.</li>
+      <li>Keep the tokens in your own wallet. If you bought inside Torch's built in wallet, send them to your own wallet first. The app can only check a wallet you can sign with.</li>
+    </ol>
+  </section>
+
+  <section id="wallet">
+    <h2><span class="n">07</span>Wallet setup</h2>
+    <p>Use one EVM wallet for everything: it holds your $ODDS on Robinhood Chain and places your bets on Polymarket on Polygon. Same address on both.</p>
+    <p><a href="https://metamask.io/download" target="_blank" rel="noopener">MetaMask</a> and <a href="https://rabby.io" target="_blank" rel="noopener">Rabby</a> work best, because they can show tokens on Robinhood Chain. Phantom can sign, but it does not show Robinhood Chain balances.</p>
+    <table>
+      <tr><th>NETWORK</th><th>VALUE</th></tr>
+      <tr><td>Name</td><td>Robinhood Chain</td></tr>
+      <tr><td>Chain ID</td><td><code>4663</code></td></tr>
+      <tr><td>RPC</td><td><code>https://rpc.mainnet.chain.robinhood.com</code></td></tr>
+      <tr><td>Currency</td><td>ETH</td></tr>
+      <tr><td>Explorer</td><td><a href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener">robinhoodchain.blockscout.com</a></td></tr>
+    </table>
+    <p><button class="pill blue" id="addChain" type="button">Add Robinhood Chain to my wallet</button> <span id="addMsg" class="dim" style="font-size:14px;margin-left:6px"></span></p>
+    <div class="card amber"><b>Your recovery phrase is yours alone.</b> Nobody from OddsEngine will ever ask for it, not in a DM, not in a form, not "for support". Signing in to the app never moves funds.</div>
+  </section>
+
+  <section id="verify">
+    <h2><span class="n">08</span>Verify in the app</h2>
+    <ol>
+      <li>Open <a href="https://public.oddsengine.live">public.oddsengine.live</a>. On a phone, open it inside your wallet's built in browser.</li>
+      <li>Tap <b>Verify $ODDS with your wallet</b>.</li>
+      <li>Your wallet asks you to sign a short text with your address and a one time code. Signing is free. It sends no transaction and moves no tokens.</li>
+      <li>The app reads your $ODDS balance on Robinhood Chain and unlocks your tier. The session lasts 7 days.</li>
+    </ol>
+  </section>
+
+  <section id="polymarket">
+    <h2><span class="n">09</span>Bet on Polymarket</h2>
+    <p>OddsEngine never holds your money. You place the bet yourself on Polymarket, from your own wallet.</p>
+    <ol>
+      <li>Open <a href="https://polymarket.com" target="_blank" rel="noopener">polymarket.com</a>, connect the same wallet and sign in once. Without that first sign in, orders from the app are refused.</li>
+      <li>Deposit USDC so you have a trading balance, plus a few cents of POL on Polygon for gas.</li>
+      <li>In the app, open a call. Each field links straight to its market, or use the buy button to place the whole block in one go.</li>
+    </ol>
+    <p class="dim">Polymarket is not available in every country. Check that it is legal where you live.</p>
+  </section>
+
+  <section id="engine">
+    <h2><span class="n">10</span>How the engine works</h2>
+    <h3>The forecast</h3>
+    <p>For every market the engine pulls ensemble forecasts from several global weather models (ICON, GFS and ECMWF) for the exact airport or station Polymarket settles on. Each ensemble member is one possible version of tomorrow. Together they give a spread of possible daily highs, which the engine turns into a probability for every temperature field. Near the end of the day it also folds in what the station has already measured, because the daily high can only go up.</p>
+    <h3>Learning from its own misses</h3>
+    <p>Every model runs a little warm or cold at some stations, and that changes with the seasons. Once a day the engine looks back at the last 21 days, compares its forecast with what each station really reported, and adjusts the correction for that city. A city needs enough results before its correction changes, so one odd day does not throw it off.</p>
+    <h3>The safety discount</h3>
+    <p>When you look at dozens of blocks and keep the best one, you tend to keep the ones where the forecast is a bit too optimistic. The engine knows this and subtracts a discount from every number before it decides. The size of that discount follows the real record: if recent calls hit less often than claimed, the discount grows.</p>
+    <h3>When it stays quiet</h3>
+    <p>No call goes out when the order book is too thin, the price is too high for the payout to make sense, the market disagrees with the engine by an extreme margin, or the station is one where the models are known to struggle. Most days that means only a few calls.</p>
+  </section>
+
+  <section id="faq">
+    <h2><span class="n">11</span>FAQ</h2>
+    <details><summary>Does the engine always win?</summary><p>No. It makes a call when the math says the price is too low, and it misses regularly. That is why every result gets posted and the record is public. Judge it by the record, not by a single call.</p></details>
+    <details><summary>Why are there days with no call?</summary><p>Because most markets are priced about right. The engine only calls the few that are not. A day without a call is the engine doing its job.</p></details>
+    <details><summary>Do I need $ODDS to use the app?</summary><p>No. Without $ODDS you see one free call a day, every result and the full record. $ODDS unlocks every call live.</p></details>
+    <details><summary>Is $ODDS an investment?</summary><p>No. It is a key to a product. There is no revenue share, no staking yield and no promise about its price.</p></details>
+    <details><summary>Why Robinhood Chain?</summary><p>It is where we launch, through Torch. And it is EVM, so the same wallet holds your $ODDS and trades on Polymarket.</p></details>
+    <details><summary>Can I use Phantom?</summary><p>Phantom can sign in, but it does not show Robinhood Chain balances. MetaMask or Rabby are the easier choice.</p></details>
+    <details><summary>The app says my session expired.</summary><p>Sessions last 7 days. Tap verify again and sign once more.</p></details>
+    <details><summary>Where do I ask questions?</summary><p>On <a href="https://t.me/OddsEngine" target="_blank" rel="noopener">Telegram</a> or <a href="https://x.com/OddsEngine" target="_blank" rel="noopener">X</a>. We never DM first and never ask for your recovery phrase.</p></details>
+  </section>
+
+  <section id="risk">
+    <h2><span class="n">12</span>Risks</h2>
+    <ul>
+      <li>Prediction markets can lose you your whole stake. A call that misses pays nothing.</li>
+      <li>Past results do not predict future ones. Weather and markets change.</li>
+      <li>Prices on Polymarket move. The price in a call may be gone when you get there.</li>
+      <li>Weather stations can report late, report a different value than expected, or be corrected afterwards. The market settles on what Polymarket's rules say.</li>
+      <li>$ODDS can lose value. Only hold what you are fine with losing.</li>
+      <li>Smart contracts, bridges and wallets carry their own risks.</li>
+    </ul>
+  </section>
+
+  <section id="terms">
+    <h2><span class="n">13</span>Terms</h2>
+    <p>OddsEngine publishes information about weather forecasts and market prices. Nothing on the website, in the app, on X or on Telegram is financial, investment or legal advice, and nothing is an offer to buy or sell anything. You decide what you do with it, and you carry the risk.</p>
+    <p>OddsEngine never holds user funds and never places trades for you. Bets are placed by you, from your own wallet, on Polymarket, under Polymarket's terms. It is your job to check that using Polymarket and holding $ODDS is legal where you live.</p>
+    <p>$ODDS gives access to features of the app for as long as you hold it. It carries no ownership, no share of revenue and no claim against anyone. Tier lines, features and the free call can change. The service is provided as is, without any guarantee that it is available, correct or complete.</p>
+  </section>
+</main>
+</div>
+
+<footer><div class="in">
+  <span>OddsEngine</span>
+  <a href="https://oddsengine.live">Website</a>
+  <a href="https://public.oddsengine.live">App</a>
+  <a href="https://x.com/OddsEngine" target="_blank" rel="noopener">X</a>
+  <a href="https://t.me/OddsEngine" target="_blank" rel="noopener">Telegram</a>
+</div></footer>
+
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i);};
+  var CA=(window.ODDS_CA||'').trim();
+  function setCA(ca){
+    if(!ca) return;
+    CA=ca;
+    $('ca').textContent=ca;
+    $('copyca').hidden=false;
+    var link='https://app.torchpad.fun/trade/robinhood/'+ca;
+    $('buyca').href=link; $('buyca').target='_blank'; $('buyca').rel='noopener';
+  }
+  setCA(CA);
+  $('copyca').addEventListener('click',function(){
+    var b=this; try{ navigator.clipboard.writeText(CA).then(function(){ b.textContent='Copied'; setTimeout(function(){ b.textContent='Copy'; },1500); }); }catch(e){}
+  });
+  function usd(v){ return '$'+Number(v).toLocaleString('en-US',{maximumFractionDigits:0}); }
+  try{
+    fetch((window.ODDSENGINE_API||'')+'/v1/tiers').then(function(r){return r.json();}).then(function(d){
+      if(d && d.mint && !CA) setCA(d.mint);
+      (d.tiers||[]).forEach(function(t){
+        if(t.tier==='holder' && t.min_usd) $('tHold').textContent=usd(t.min_usd);
+        if(t.tier==='pro' && t.min_usd) $('tPro').textContent=usd(t.min_usd);
+      });
+    }).catch(function(){});
+  }catch(e){}
+
+  function wallet(){
+    var e=window.ethereum; if(!e) return null;
+    if(Array.isArray(e.providers)){ return e.providers.find(function(x){return x.isMetaMask;})||e.providers[0]; }
+    return e;
+  }
+  $('addChain').addEventListener('click',function(){
+    var w=wallet(), m=$('addMsg');
+    if(!w){ m.textContent='No wallet found. Install MetaMask or Rabby, or open this page in your wallet browser.'; return; }
+    w.request({method:'wallet_addEthereumChain',params:[{chainId:'0x1237',chainName:'Robinhood Chain',
+      nativeCurrency:{name:'Ether',symbol:'ETH',decimals:18},
+      rpcUrls:['https://rpc.mainnet.chain.robinhood.com'],
+      blockExplorerUrls:['https://robinhoodchain.blockscout.com']}]})
+    .then(function(){ m.textContent='Done. Robinhood Chain is in your wallet.'; })
+    .catch(function(e){ if(!(e&&e.code===4001)) m.textContent='Could not add it: '+((e&&e.message)||e); });
+  });
+
+  var side=$('side'), btn=$('menuBtn');
+  btn.addEventListener('click',function(){ var o=side.classList.toggle('open'); btn.setAttribute('aria-expanded',o?'true':'false'); });
+  side.addEventListener('click',function(e){ if(e.target.tagName==='A'){ side.classList.remove('open'); btn.setAttribute('aria-expanded','false'); } });
+
+  var links=[].slice.call(side.querySelectorAll('a'));
+  var secs=links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function spy(){
+    var y=window.scrollY+120, cur=0;
+    secs.forEach(function(s,i){ if(s && s.offsetTop<=y) cur=i; });
+    links.forEach(function(a,i){ a.classList.toggle('on',i===cur); });
+  }
+  window.addEventListener('scroll',spy,{passive:true}); spy();
+})();
+</script>
+</body>
+</html>
