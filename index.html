@@ -12,6 +12,7 @@
 <meta property="og:description" content="How the engine makes a call, how every result gets scored, and how $ODDS unlocks every call live.">
 <meta property="og:image" content="https://docs.oddsengine.live/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@OddsEngine">
 <meta name="twitter:image" content="https://docs.oddsengine.live/og-image.jpg">
 <link rel="icon" href="ring.png">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -139,6 +140,7 @@ footer .in a{display:inline-block;padding:10px 4px}
   <a href="#polymarket">Bet on Polymarket</a>
   <a href="#engine">How the engine works</a>
   <h4>MORE</h4>
+  <a href="#next">Updates</a>
   <a href="#faq">FAQ</a>
   <a href="#risk">Risks</a>
   <a href="#terms">Terms</a>
@@ -160,18 +162,23 @@ footer .in a{display:inline-block;padding:10px 4px}
 
   <section id="call">
     <h2><span class="n">02</span>How to read a call</h2>
-    <div class="card"><div class="call">🌡️ MADRID · Oct 9 · daily high
+    <div class="card"><div class="call">ODDSENGINE · MADRID · READ
 
-Block: 19 / 20 / 21°C
-Price 77c · engine says 82%
-Pays 1.30x if the high lands in the block.</div></div>
+Block: 19°C · 20°C · 21°C
+
+Market price · 77c  (the market says 77%)
+Weather model · 82%
+Honest odds · 77%
+
+👀 READ ONLY · no bet</div></div>
     <ul>
-      <li><b>Block</b>: the fields the engine buys together. If the official high lands in any of them, the call hits.</li>
-      <li><b>Price</b>: what the whole block costs, in cents per dollar of payout. 77c means you pay 77 cents and get 1 dollar back if it hits.</li>
-      <li><b>Engine says</b>: how likely the engine thinks the block is to hit, after its own safety discount (see <a href="#engine">how the engine works</a>).</li>
-      <li><b>Pays</b>: what you get back per dollar if the call hits. 1.30x means 1 dollar becomes 1.30.</li>
+      <li><b>Block</b>: the fields the engine picks together. If the official high lands in any of them, the call hits.</li>
+      <li><b>Market price</b>: what the whole block costs, in cents per dollar of payout. 77c means you pay 77 cents and get 1 dollar back if it hits. It is also how likely the market thinks the block is.</li>
+      <li><b>Weather model</b>: what the forecast alone says.</li>
+      <li><b>Honest odds</b>: the model checked against the engine's own scored record. If past calls show the price was the better guide, the honest odds move toward the price (see <a href="#engine">how the engine works</a>).</li>
+      <li><b>BET or READ</b>: a call is a BET only when the honest odds beat the price by at least 3 points. Then the app and Your Engine show how to split a stake so every field pays the same. Everything else is a READ: the engine's view, posted and scored, with no stake suggested.</li>
     </ul>
-    <p>A call only goes out when the engine's number is clearly above the price. In the app, holders also see how to split a stake across the fields, so every field pays the same if it wins.</p>
+    <p>Most calls are READs. That is on purpose: the engine only says BET when its own record backs it up.</p>
   </section>
 
   <section id="results">
@@ -259,15 +266,55 @@ Pays 1.30x if the high lands in the block.</div></div>
     <p>For every market the engine pulls ensemble forecasts from several global weather models (ICON, GFS and ECMWF) for the exact airport or station Polymarket settles on. Each ensemble member is one possible version of tomorrow. Together they give a spread of possible daily highs, which the engine turns into a probability for every temperature field. Near the end of the day it also folds in what the station has already measured, because the daily high can only go up.</p>
     <h3>Learning from its own misses</h3>
     <p>Every model runs a little warm or cold at some stations, and that changes with the seasons. Once a day the engine looks back at the last 21 days, compares its forecast with what each station really reported, and adjusts the correction for that city. A city needs enough results before its correction changes, so one odd day does not throw it off.</p>
-    <h3>The safety discount</h3>
-    <p>When you look at dozens of blocks and keep the best one, you tend to keep the ones where the forecast is a bit too optimistic. The engine knows this and subtracts a discount from every number before it decides. The size of that discount follows the real record: if recent calls hit less often than claimed, the discount grows.</p>
+    <h3>Honest odds</h3>
+    <p>A forecast can be good and still add nothing to a price that already knows it. So once a day the engine checks its last 150 scored calls: did its own number predict the result better than the market price did? The answer sets how much weight the model gets. If the market was the better guide, the honest odds sit close to the price and calls go out as READs. If the model starts adding something the price did not have, its weight grows by itself and BETs come back.</p>
+    <h3>It learns in public</h3>
+    <p>When a correction or the model's weight changes, the engine posts what it changed and why, as "What I learned today".</p>
     <h3>When it stays quiet</h3>
     <p>No call goes out when the order book is too thin, the price is too high for the payout to make sense, the market disagrees with the engine by an extreme margin, or the station is one where the models are known to struggle. Most days that means only a few calls.</p>
   </section>
 
+  <section id="next">
+    <h2><span class="n">11</span>Updates</h2>
+    <p>Every update below is already running inside the engine. It appears here the moment it is switched on for holders.</p>
+
+    <div data-feature="agent" hidden>
+    <h3>Your Engine</h3>
+    <p>A personal agent in Telegram for every holder. You set your cities, your stake and how much risk you like. It sends you the calls that fit, works out the split for your stake, and keeps score of every pick. Every Sunday it sends your week and tells you which cities work for you and which do not.</p>
+    <p>Commands: <code>/me</code> your tier, rules and record · <code>/stake 25</code> · <code>/cities paris, seoul</code> or <code>/cities all</code> · <code>/drop_seoul</code> · <code>/risk safe</code> · <code>/reads on</code> also sends READ calls · <code>/quiet 23-7</code> with <code>/tz +2</code> · <code>/pause</code> · <code>/join</code> · <code>/unlink</code></p>
+    <p>Your Engine never holds your money and has no access to your wallet. You buy on Polymarket yourself, or just follow along and it tracks how your picks would have gone.</p>
+    </div>
+
+    <div data-feature="station" hidden>
+    <h3>Station Live</h3>
+    <p>The markets settle on official weather stations, mostly at airports. Station Live shows what each of them has measured today: the high so far, the last reading and the local time. The day's high can only go up, so every bracket below it is already out, and the app crosses it off. Each call in the app also gets a line with what its station says right now.</p>
+    </div>
+
+    <div data-feature="crowd" hidden>
+    <h3>Engine vs Crowd</h3>
+    <p>Every market has a crowd favourite: the three brackets the market prices highest. For every market the engine locks that pick once, when it costs between 75 and 85 cents, and scores it after the day, right next to the engine's own calls. The Record tab shows both: hit rate, what the price said, and what a dollar on each would have done. If the crowd keeps winning, you will see it there first.</p>
+    </div>
+
+    <div data-feature="kalshi" hidden>
+    <h3>Kalshi, the second market</h3>
+    <p>Kalshi runs daily high temperature markets too, for some US cities. The Kalshi tab in the app puts both prices next to each other for the same city and day. Where both settle on the same station, it is the same question, and a gap of 5 cents or more is marked. Elsewhere the stations differ (Kalshi uses Central Park for New York, Polymarket uses LaGuardia), so the prices can differ for a reason.</p>
+    <p>Every engine call and every crowd pick in a Kalshi city is also locked at the Kalshi price the moment it goes out, and scored on Kalshi's own result after the day. The Kalshi tab shows that record on its own: hit rate, what the price said, and what a dollar would have done, before Kalshi's trading fees.</p>
+    <p>Kalshi is a separate, US regulated exchange with its own account and rules. Check that it is available where you live. Your $ODDS tier works the same: the tab is part of the app.</p>
+    </div>
+
+    <h3>Getting in</h3>
+    <ol>
+      <li>Verify your wallet in the <a href="https://public.oddsengine.live" target="_blank" rel="noopener">app</a>.</li>
+      <li>Tap <b>Link Telegram</b>. Telegram opens <a href="https://t.me/OddsEnginePublicBot" target="_blank" rel="noopener">@OddsEnginePublicBot</a>, tap Start.</li>
+      <li>Holders get a personal invite to the private holder group, where every call lands live. Sell below the holder line and the bot takes you out of the group. Top up and write <code>/join</code> to come back.</li>
+    </ol>
+    <p><b>Also coming: Beat the Engine, Season 1.</b> Pick tomorrow's high against the machine and against other holders. Free to play. And more after that.</p>
+  </section>
+
   <section id="faq">
-    <h2><span class="n">11</span>FAQ</h2>
-    <details><summary>Does the engine always win?</summary><p>No. It makes a call when the math says the price is too low, and it misses regularly. That is why every result gets posted and the record is public. Judge it by the record, not by a single call.</p></details>
+    <h2><span class="n">12</span>FAQ</h2>
+    <details><summary>Does the engine always win?</summary><p>No. It misses regularly. That is why every result gets posted and the record is public. Judge it by the record, not by a single call.</p></details>
+    <details><summary>What do BET and READ mean?</summary><p>Every call shows three numbers: what the market price says, what the weather model says, and the honest odds. The honest odds are the model checked against our own scored record: if past calls show the price was the better guide, the honest odds move toward the price. A call is a <b>BET</b> only when the honest odds beat the price by at least 3 points. Everything else is a <b>READ</b>: the engine's view, posted and scored, but with no stake suggested. Your Engine sends only BETs unless you write /reads on.</p></details>
     <details><summary>Why are there days with no call?</summary><p>Because most markets are priced about right. The engine only calls the few that are not. A day without a call is the engine doing its job.</p></details>
     <details><summary>Do I need $ODDS to use the app?</summary><p>No. Without $ODDS you see one free call a day, every result and the full record. $ODDS unlocks every call live.</p></details>
     <details><summary>Is $ODDS an investment?</summary><p>No. It is a key to a product. There is no revenue share, no staking yield and no promise about its price.</p></details>
@@ -278,7 +325,7 @@ Pays 1.30x if the high lands in the block.</div></div>
   </section>
 
   <section id="risk">
-    <h2><span class="n">12</span>Risks</h2>
+    <h2><span class="n">13</span>Risks</h2>
     <ul>
       <li>Prediction markets can lose you your whole stake. A call that misses pays nothing.</li>
       <li>Past results do not predict future ones. Weather and markets change.</li>
@@ -290,7 +337,7 @@ Pays 1.30x if the high lands in the block.</div></div>
   </section>
 
   <section id="terms">
-    <h2><span class="n">13</span>Terms</h2>
+    <h2><span class="n">14</span>Terms</h2>
     <p>OddsEngine publishes information about weather forecasts and market prices. Nothing on the website, in the app, on X or on Telegram is financial, investment or legal advice, and nothing is an offer to buy or sell anything. You decide what you do with it, and you carry the risk.</p>
     <p>OddsEngine never holds user funds and never places trades for you. Bets are placed by you, from your own wallet, on Polymarket, under Polymarket's terms. It is your job to check that using Polymarket and holding $ODDS is legal where you live.</p>
     <p>$ODDS gives access to features of the app for as long as you hold it. It carries no ownership, no share of revenue and no claim against anyone. Tier lines, features and the free call can change. The service is provided as is, without any guarantee that it is available, correct or complete.</p>
@@ -319,6 +366,12 @@ Pays 1.30x if the high lands in the block.</div></div>
     $('buyca').href=link; $('buyca').target='_blank'; $('buyca').rel='noopener';
   }
   setCA(CA);
+  /* Seit v7: Updates erscheinen, sobald sie in der App freigeschaltet sind. */
+  (function(){
+    var zeigen=function(f){ document.querySelectorAll('[data-feature]').forEach(function(el){ el.hidden=!f[el.getAttribute('data-feature')]; }); };
+    if(/[?&]preview=1/.test(location.search)){ zeigen({agent:1,station:1,crowd:1,kalshi:1}); return; }
+    try{ fetch((window.ODDSENGINE_API||'')+'/v1/features').then(function(r){ return r.json(); }).then(function(d){ zeigen((d&&d.features)||{}); }).catch(function(){}); }catch(e){}
+  })();
   $('copyca').addEventListener('click',function(){
     var b=this; try{ navigator.clipboard.writeText(CA).then(function(){ b.textContent='Copied'; setTimeout(function(){ b.textContent='Copy'; },1500); }); }catch(e){}
   });
