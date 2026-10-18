@@ -207,8 +207,8 @@ Honest odds · 77%
     <h2><span class="n">05</span>Tiers</h2>
     <div class="tiers">
       <div class="tier"><b>No token</b><div class="p">free</div><ul><li>1 free call a day on X and Telegram</li><li>Every result, hit or miss</li><li>The full record</li></ul></div>
-      <div class="tier hot"><b>Holder</b><div class="p">hold <span id="tHold">$100</span> in $ODDS</div><ul><li>Every call, live</li><li>The stake split for every block</li><li>One tap to the market on Polymarket</li></ul></div>
-      <div class="tier"><b>Pro</b><div class="p">hold <span id="tPro">$1,000</span> in $ODDS</div><ul><li>Everything in Holder</li><li>The engine board: engine vs market for every open city</li><li>Monthly pass, coming soon</li></ul></div>
+      <div class="tier hot"><b>Holder</b><div class="p">hold <span id="tHold">$100</span></div><ul><li>Every call, live</li><li>The stake split for every block</li><li>One tap to the market on Polymarket</li></ul></div>
+      <div class="tier"><b>Pro</b><div class="p">hold <span id="tPro">$1,000</span></div><ul><li>Everything in Holder</li><li>The engine board: engine vs market for every open city</li><li>Monthly pass, coming soon</li></ul></div>
     </div>
     <p>The value is counted in dollars at the current $ODDS price. To stop people flipping in and out on every small price move, a tier you reached stays yours as long as you still hold at least 70% of its line.</p>
   </section>
@@ -221,6 +221,14 @@ Honest odds · 77%
       <li>Open <a href="https://app.torchpad.fun" target="_blank" rel="noopener">app.torchpad.fun</a>, connect your wallet and buy $ODDS. Check the contract address against the one above.</li>
       <li>Keep the tokens in your own wallet. If you bought inside Torch's built in wallet, send them to your own wallet first. The app can only check a wallet you can sign with.</li>
     </ol>
+    <h3>Pair, tax and holder rewards</h3>
+    <ul>
+      <li><b>Pair:</b> $ODDS trades against $TORCH on Robinhood Chain. Supply is 1 billion.</li>
+      <li><b>Buy tax 3%, sell tax 0%.</b> Selling costs you no tax.</li>
+      <li><b>Where the 3% goes:</b> on a $100 buy, $1.05 goes to $ODDS holders, $1.05 to the creator and $0.90 to Torch.</li>
+      <li><b>Holder rewards</b> are paid by the Torch contract, not by OddsEngine. Your share depends on how much you hold and for how long. Buying right before a payout and selling right after earns very little.</li>
+      <li><b>Claim</b> your rewards in the Torch terminal, on your profile or the Rewards page. Torch charges nothing for claiming, you only pay gas.</li>
+    </ul>
   </section>
 
   <section id="wallet">
@@ -310,7 +318,7 @@ Honest odds · 77%
       <li>Tap <b>Link Telegram</b>. Telegram opens <a href="https://t.me/OddsEnginePublicBot" target="_blank" rel="noopener">@OddsEnginePublicBot</a>, tap Start.</li>
       <li>Holders get a personal invite to the private holder group, where every call lands live. Sell below the holder line and the bot takes you out of the group. Top up and write <code>/join</code> to come back.</li>
     </ol>
-    <p><b>Also coming: Beat the Engine, Season 1.</b> Pick tomorrow's high against the machine and against other holders. Free to play. And more after that.</p>
+    <p><b>More is coming.</b> Each piece shows up here the day it switches on.</p>
   </section>
 
   <section id="faq">
@@ -318,8 +326,10 @@ Honest odds · 77%
     <details><summary>Does the engine always win?</summary><p>No. It misses regularly. That is why every result gets posted and the record is public. Judge it by the record, not by a single call.</p></details>
     <details><summary>What do BET and READ mean?</summary><p>Every call shows three numbers: what the market price says, what the weather model says, and the honest odds. The honest odds are the model checked against our own scored record: if past calls show the price was the better guide, the honest odds move toward the price. A call is a <b>BET</b> only when the honest odds beat the price by at least 3 points. Everything else is a <b>READ</b>: the engine's view, posted and scored, but with no stake suggested. Your Engine sends only BETs unless you write /reads on.</p></details>
     <details><summary>Why are there days with no call?</summary><p>Because most markets are priced about right. The engine only calls the few that are not. A day without a call is the engine doing its job.</p></details>
+    <details><summary>Does the engine trade for me?</summary><p>No. You place every trade yourself on Polymarket, from your own account. The engine and Your Engine only tell you what they see and size it for your stake. Your money never leaves your wallet. New to Polymarket? Section 09 and the Start tab in the app walk you through it.</p></details>
+    <details><summary>What is coming next?</summary><p>A new piece every few days. Each one is announced the day it switches on, and it shows up in the Updates section above the moment it does. Nothing is announced before it works.</p></details>
     <details><summary>Do I need $ODDS to use the app?</summary><p>No. Without $ODDS you see one free call a day, every result and the full record. $ODDS unlocks every call live.</p></details>
-    <details><summary>Is $ODDS an investment?</summary><p>No. It is a key to a product. There is no revenue share, no staking yield and no promise about its price.</p></details>
+    <details><summary>Is $ODDS an investment?</summary><p>No. It is a key to a product. $ODDS is paired with $TORCH and has a 3% buy tax, set at launch: 1.05% of every buy goes to holders, paid out by the Torch contract based on how much and how long you hold, and claimed in the Torch terminal. 1.05% goes to the creator, 0.9% to Torch. OddsEngine itself pays nothing out, there is no staking, and nobody can promise you anything about the price.</p></details>
     <details><summary>Why Robinhood Chain?</summary><p>It is where we launch, through Torch. And it is EVM, so the same wallet holds your $ODDS and trades on Polymarket.</p></details>
     <details><summary>Can I use Phantom?</summary><p>Phantom can sign in, but it does not show Robinhood Chain balances. MetaMask or Rabby are the easier choice.</p></details>
     <details><summary>The app says my session expired.</summary><p>Sessions last 7 days. Tap verify again and sign once more.</p></details>
@@ -371,7 +381,6 @@ Honest odds · 77%
   /* Seit v7: Updates erscheinen, sobald sie in der App freigeschaltet sind. */
   (function(){
     var zeigen=function(f){ document.querySelectorAll('[data-feature]').forEach(function(el){ el.hidden=!f[el.getAttribute('data-feature')]; }); };
-    if(/[?&]preview=1/.test(location.search)){ zeigen({agent:1,station:1,crowd:1,kalshi:1}); return; }
     try{ fetch((window.ODDSENGINE_API||'')+'/v1/features').then(function(r){ return r.json(); }).then(function(d){ zeigen((d&&d.features)||{}); }).catch(function(){}); }catch(e){}
   })();
   $('copyca').addEventListener('click',function(){
@@ -382,8 +391,8 @@ Honest odds · 77%
     fetch((window.ODDSENGINE_API||'')+'/v1/tiers').then(function(r){return r.json();}).then(function(d){
       if(d && d.mint && !CA) setCA(d.mint);
       (d.tiers||[]).forEach(function(t){
-        if(t.tier==='holder' && t.min_usd) $('tHold').textContent=usd(t.min_usd);
-        if(t.tier==='pro' && t.min_usd) $('tPro').textContent=usd(t.min_usd);
+        if(t.tier==='holder') $('tHold').textContent= t.min_tokens ? Math.round(t.min_tokens).toLocaleString('en-US')+' $ODDS' : (t.min_usd? usd(t.min_usd) : $('tHold').textContent);
+        if(t.tier==='pro') $('tPro').textContent= t.min_tokens ? Math.round(t.min_tokens).toLocaleString('en-US')+' $ODDS' : (t.min_usd? usd(t.min_usd) : $('tPro').textContent);
       });
     }).catch(function(){});
   }catch(e){}
