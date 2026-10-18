@@ -25,6 +25,7 @@
   window.ODDS_CA = "";
 </script>
 <style>
+body.torch{--blue:#12b76a;--blue2:#3ef0a0}
 :root{
   --bg:#05070b; --bg2:#0a0e15; --card:rgba(255,255,255,.04); --line:rgba(255,255,255,.10);
   --tx:#eef2f7; --dim:#a3adbb; --dim2:#6f7a89;
@@ -112,6 +113,15 @@ footer .in a{display:inline-block;padding:10px 4px}
   .layout{padding:0 16px}
   td:first-child{white-space:normal}
 }
+/* TORCH-AUTO */
+
+body.torch a:hover{color:#8affc8}
+body.torch .aurora{
+  background:radial-gradient(35% 45% at 20% 30%,rgba(18,183,106,.35),transparent 70%),
+             radial-gradient(30% 40% at 85% 15%,rgba(94,224,195,.14),transparent 70%)}
+body.torch nav.side a.on{background:rgba(62,240,160,.08)}
+body.torch .card.blue{border-color:rgba(62,240,160,.35);background:rgba(18,183,106,.07)}
+body.torch .tier.hot{border-color:rgba(62,240,160,.5);box-shadow:0 0 0 1px rgba(62,240,160,.15),0 10px 40px rgba(18,183,106,.15)}
 </style>
 </head>
 <body>
@@ -386,10 +396,19 @@ Honest odds · 77%
   $('copyca').addEventListener('click',function(){
     var b=this; try{ navigator.clipboard.writeText(CA).then(function(){ b.textContent='Copied'; setTimeout(function(){ b.textContent='Copy'; },1500); }); }catch(e){}
   });
+  // Seit v11: gruen mit dem Torch-Schalter auf admin.html, wie Landing und App.
+  function torchAn(){
+    if(document.body.classList.contains('torch')) return;
+    document.body.classList.add('torch');
+    document.querySelectorAll('link[rel="icon"],link[rel="apple-touch-icon"]').forEach(function(l){ l.href=l.getAttribute('href').replace(/(ring|icon-180)\.png$/,'$1-torch.png'); });
+    document.querySelectorAll('.brand img').forEach(function(i){ i.src='ring-torch.png'; });
+  }
+  if(/[?&]torch=1/.test(location.search)) document.addEventListener('DOMContentLoaded',torchAn);
   function usd(v){ return '$'+Number(v).toLocaleString('en-US',{maximumFractionDigits:0}); }
   try{
     fetch((window.ODDSENGINE_API||'')+'/v1/tiers').then(function(r){return r.json();}).then(function(d){
       if(d && d.mint && !CA) setCA(d.mint);
+      if(d && d.torch) torchAn();
       (d.tiers||[]).forEach(function(t){
         if(t.tier==='holder') $('tHold').textContent= t.min_tokens ? Math.round(t.min_tokens).toLocaleString('en-US')+' $ODDS' : (t.min_usd? usd(t.min_usd) : $('tHold').textContent);
         if(t.tier==='pro') $('tPro').textContent= t.min_tokens ? Math.round(t.min_tokens).toLocaleString('en-US')+' $ODDS' : (t.min_usd? usd(t.min_usd) : $('tPro').textContent);
