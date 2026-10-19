@@ -323,6 +323,14 @@ Honest odds · 77%
     <p>Kalshi is a separate, US regulated exchange with its own account and rules. Check that it is available where you live. Your $ODDS tier works the same: the tab is part of the app.</p>
     </div>
 
+    <div data-feature="crypto" hidden>
+    <h3>Crypto Edition</h3>
+    <p>The OddsEngine Crypto Edition lives at <a href="https://terminal.oddsengine.live" target="_blank" rel="noopener">terminal.oddsengine.live</a>. Polymarket runs Up or Down markets on BTC, ETH, SOL, XRP, DOGE, BNB and HYPE in windows of five minutes, fifteen minutes and four hours. Up wins when the Chainlink average over the whole window ends at or above the price at the start.</p>
+    <p>That average is what makes these windows readable. Halfway through, half of it is already written. The engine takes the start price, the average so far, the price now, the time left and how much the coin is moving, and turns that into one number: the chance for Up. The terminal puts it next to the order book. When the engine sees more than the ask plus Polymarket's taker fee, the market gets an edge tag.</p>
+    <p>Five modules trade every window on paper and keep their own public record: <b>Engine edge</b> (the side the engine rates at least 5 cents above the ask after fees), <b>Crypto lag</b> (the coin moves hard on the exchange within a minute, confirmed over five minutes, and the Polymarket price has not caught up yet), <b>Both sides</b> (Up and Down together when both cost less than a dollar with fees), <b>Cheap side</b> (10 cents or less) and <b>Late favourite</b> (90 % or more on the engine, ask at 95 cents or less, near the end). Every entry uses the real ask and the real fee, ten shares each, held to the result.</p>
+    <p>At set points in every window the engine's number and the market price are written down and scored once the window settles, so you can see who called it better. These are paper trades, not orders. You trade on Polymarket yourself.</p>
+    </div>
+
     <h3>Getting in</h3>
     <ol>
       <li>Verify your wallet in the <a href="https://public.oddsengine.live" target="_blank" rel="noopener">app</a>.</li>
@@ -392,7 +400,10 @@ Honest odds · 77%
   /* Seit v7: Updates erscheinen, sobald sie in der App freigeschaltet sind. */
   (function(){
     var zeigen=function(f){ document.querySelectorAll('[data-feature]').forEach(function(el){ el.hidden=!f[el.getAttribute('data-feature')]; }); };
-    try{ fetch((window.ODDSENGINE_API||'')+'/v1/features').then(function(r){ return r.json(); }).then(function(d){ zeigen((d&&d.features)||{}); }).catch(function(){}); }catch(e){}
+    var ADM='';try{var q=new URLSearchParams(location.search).get('admin');if(q){localStorage.setItem('oe_admin',q);history.replaceState(null,'',location.pathname+location.hash);}ADM=localStorage.getItem('oe_admin')||'';}catch(e){}
+  function adminBar(){var b=document.createElement('div');b.textContent='Admin preview: you see every update, holders only see what is switched on.';b.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#ffb547;color:#1a1000;font:12px/1.4 monospace;padding:7px 14px;text-align:center';document.body.appendChild(b);}
+  function preview(f,d){ if(d&&d.admin){ var all={}; Object.keys(f).forEach(function(k){all[k]=true;}); adminBar(); return all; } return f; }
+    try{ fetch((window.ODDSENGINE_API||'')+'/v1/features',ADM?{headers:{'X-OddsEngine-Admin':ADM}}:{}).then(function(r){ return r.json(); }).then(function(d){ zeigen(preview((d&&d.features)||{},d)); }).catch(function(){}); }catch(e){}
   })();
   $('copyca').addEventListener('click',function(){
     var b=this; try{ navigator.clipboard.writeText(CA).then(function(){ b.textContent='Copied'; setTimeout(function(){ b.textContent='Copy'; },1500); }); }catch(e){}
