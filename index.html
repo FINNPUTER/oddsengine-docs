@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>OddsEngine Docs</title>
-<meta name="description" content="How OddsEngine works: the calls, the record, the $ODDS key on Robinhood Chain, wallets, tiers and the rules.">
+<meta name="description" content="How OddsEngine works: the calls, the record, 460+ AI models, AI agents, buyback and burn, the $ODDS key on Robinhood Chain, wallets, tiers and the rules.">
 <meta name="theme-color" content="#05070b">
 <link rel="canonical" href="https://docs.oddsengine.live/">
 <meta property="og:type" content="website">
@@ -149,6 +149,10 @@ body.torch .tier.hot{border-color:rgba(62,240,160,.5);box-shadow:0 0 0 1px rgba(
   <h4>TRADING</h4>
   <a href="#polymarket">Bet on Polymarket</a>
   <a href="#engine">How the engine works</a>
+  <h4 data-feature="ai" hidden>AI</h4>
+  <a href="#ai" data-feature="ai" hidden>460+ AI models</a>
+  <a href="#agents" data-feature="x402" hidden>For AI agents</a>
+  <a href="#burn" data-feature="x402usdc" hidden>Buyback and burn</a>
   <h4>MORE</h4>
   <a href="#next">Updates</a>
   <a href="#faq">FAQ</a>
@@ -161,6 +165,7 @@ body.torch .tier.hot{border-color:rgba(62,240,160,.5);box-shadow:0 0 0 1px rgba(
     <div class="eyebrow">DOCUMENTATION</div>
     <h1>How OddsEngine works.</h1>
     <p class="lead">An engine that forecasts the daily high in about 50 cities and compares it with the prices on Polymarket. When the market looks off, it makes a call. Every result gets posted, hit or miss.</p>
+    <p class="lead" data-feature="ai" hidden style="margin-top:10px">On top of that: 460+ AI models in one place, paid per use with $ODDS, for people and for AI agents.</p>
   </div>
 
   <section id="what">
@@ -295,6 +300,45 @@ Honest odds · 77%
     <p>No call goes out when the order book is too thin, the price is too high for the payout to make sense, the market disagrees with the engine by an extreme margin, or the station is one where the models are known to struggle. Most days that means only a few calls.</p>
   </section>
 
+  <section id="ai" data-feature="ai" hidden>
+    <h2><span class="n">AI</span>460+ AI models, pay per use</h2>
+    <p>At <a href="https://engine.oddsengine.live" target="_blank" rel="noopener">engine.oddsengine.live</a> you get the models you know (Claude, GPT, Gemini, Grok, DeepSeek and hundreds more) in one chat. No subscription, no card, no account. You connect a wallet, top up with $ODDS and pay only for what you use.</p>
+    <ol>
+      <li>Open the site and connect your wallet. You sign one message, no transaction.</li>
+      <li>Top up from $1 in $ODDS. Your balance is kept in dollars, so it does not move with the token price.</li>
+      <li>Pick a model and chat. Text, images and files work, depending on the model.</li>
+    </ol>
+    <ul>
+      <li><b>Prices:</b> every price you see already includes the OddsEngine fee. Nothing gets added later.</li>
+      <li><b>Hold more, pay less:</b> the more $ODDS you hold, the lower your fee. Your current fee and the next step are on the Account page.</li>
+      <li><b>For developers:</b> the same models through an OpenAI compatible API with your own keys. See the <a href="https://engine.oddsengine.live/docs.html" target="_blank" rel="noopener">API docs</a>.</li>
+    </ul>
+  </section>
+
+  <section id="agents" data-feature="x402" hidden>
+    <h2><span class="n">AI</span>For AI agents</h2>
+    <p>AI agents can use OddsEngine on their own, without an account and without an API key. This runs on x402, an open standard for paying per request on the web.</p>
+    <ol>
+      <li>The agent asks a question.</li>
+      <li>Our server answers with a price.</li>
+      <li>The agent signs one payment from its own wallet. It pays no gas, our server settles it on chain.</li>
+      <li>The agent gets its answer, usually within seconds. Whatever the request did not use stays as credit for the next one.</li>
+    </ol>
+    <div data-feature="x402usdc" hidden><p><b>Pay in USDC.</b> Agents can pay in USDC on Base. Any agent built with a standard x402 library works without changes.</p></div>
+    <p><b>Pay in $ODDS.</b> Agents can also pay directly in $ODDS on Robinhood Chain.</p>
+    <p>Building an agent? Code for JavaScript and Python is in the <a href="https://engine.oddsengine.live/docs.html#x402" target="_blank" rel="noopener">developer docs</a>. The endpoint is <code style="word-break:break-all">https://api.oddsengine.live/v1/chat/completions</code>.</p>
+  </section>
+
+  <section id="burn" data-feature="x402usdc" hidden>
+    <h2><span class="n">AI</span>Buyback and burn</h2>
+    <p>When an agent pays in USDC, the model cost goes to the model. Our margin goes into a pot. Once the pot reaches the next buy amount, the server buys $ODDS on Robinhood Chain:</p>
+    <ul>
+      <li><b>50% is burned:</b> sent to <code style="word-break:break-all">0x000000000000000000000000000000000000dEaD</code>, where nobody can ever move it again.</li>
+      <li><b>50% goes to OddsEngine:</b> into the revenue wallet.</li>
+    </ul>
+    <p>Every buy and every burn is public, with links to the transactions. Watch it live on <a href="https://public.oddsengine.live/burn" target="_blank" rel="noopener">public.oddsengine.live/burn</a>, together with the total $ODDS burned so far.</p>
+  </section>
+
   <section id="next">
     <h2><span class="n">11</span>Updates</h2>
     <p>Every update below is already running inside the engine. It appears here the moment it is switched on for holders.</p>
@@ -316,6 +360,11 @@ Honest odds · 77%
     <p>Every market has a crowd favourite: the three brackets the market prices highest. For every market the engine locks that pick once, when it costs between 75 and 85 cents, and scores it after the day, right next to the engine's own calls. The Record tab shows both: hit rate, what the price said, and what a dollar on each would have done. If the crowd keeps winning, you will see it there first.</p>
     </div>
 
+    <div data-feature="lows" hidden>
+    <h3>Lowest temperature</h3>
+    <p>Polymarket also runs markets on how cold it gets: the lowest temperature of the day, at the same stations as the highs. The engine makes these calls the same way. It reads the forecast for the night and the morning, freezes its pick at local midnight and scores it against the station after the day. Calls and results go to the holder channel and the app, like the highs.</p>
+    </div>
+
     <div data-feature="kalshi" hidden>
     <h3>Kalshi, the second market</h3>
     <p>Kalshi runs daily high temperature markets too, for some US cities. The Kalshi tab in the app puts both prices next to each other for the same city and day. Where both settle on the same station, it is the same question, and a gap of 5 cents or more is marked. Elsewhere the stations differ (Kalshi uses Central Park for New York, Polymarket uses LaGuardia), so the prices can differ for a reason.</p>
@@ -327,8 +376,13 @@ Honest odds · 77%
     <h3>Crypto Edition</h3>
     <p>The OddsEngine Crypto Edition lives at <a href="https://terminal.oddsengine.live" target="_blank" rel="noopener">terminal.oddsengine.live</a>. Polymarket runs Up or Down markets on BTC, ETH, SOL, XRP, DOGE, BNB and HYPE in windows of five minutes, fifteen minutes and four hours. Up wins when the Chainlink average over the whole window ends at or above the price at the start.</p>
     <p>That average is what makes these windows readable. Halfway through, half of it is already written. The engine takes the start price, the average so far, the price now, the time left and how much the coin is moving, and turns that into one number: the chance for Up. The terminal puts it next to the order book. When the engine sees more than the ask plus Polymarket's taker fee, the market gets an edge tag.</p>
-    <p>Five modules trade every window on paper and keep their own public record: <b>Engine edge</b> (the side the engine rates at least 5 cents above the ask after fees), <b>Crypto lag</b> (the coin moves hard on the exchange within a minute, confirmed over five minutes, and the Polymarket price has not caught up yet), <b>Both sides</b> (Up and Down together when both cost less than a dollar with fees), <b>Cheap side</b> (10 cents or less) and <b>Late favourite</b> (90 % or more on the engine, ask at 95 cents or less, near the end). Every entry uses the real ask and the real fee, ten shares each, held to the result.</p>
-    <p>At set points in every window the engine's number and the market price are written down and scored once the window settles, so you can see who called it better. These are paper trades, not orders. You trade on Polymarket yourself.</p>
+    <p>Five modules pick a side in every window and keep their own public record: <b>Engine edge</b> (the side the engine rates at least 5 cents above the ask after fees), <b>Crypto lag</b> (the coin moves hard on the exchange within a minute, confirmed over five minutes, and the Polymarket price has not caught up yet), <b>Both sides</b> (Up and Down together when both cost less than a dollar with fees), <b>Cheap side</b> (10 cents or less) and <b>Late favourite</b> (90 % or more on the engine, ask at 95 cents or less, near the end). Every entry uses the real ask and the real fee, ten shares each, held to the result.</p>
+    <p>At set points in every window the engine's number and the market price are written down and scored once the window settles, so you can see who called it better. These are tracked picks, not orders. You trade on Polymarket yourself.</p>
+    </div>
+
+    <div data-feature="agents" hidden>
+    <h3>Agent keys and MCP</h3>
+    <p>Developers can give their agents their own API keys with a daily spending limit and a list of allowed models, created by a wallet signature without a browser. Claude, Cursor and other MCP clients can connect to OddsEngine directly as a tool. Details are in the <a href="https://engine.oddsengine.live/docs.html#agents" target="_blank" rel="noopener">developer docs</a>.</p>
     </div>
 
     <h3>Getting in</h3>
@@ -347,6 +401,8 @@ Honest odds · 77%
     <details><summary>Why are there days with no call?</summary><p>Because most markets are priced about right. The engine only calls the few that are not. A day without a call is the engine doing its job.</p></details>
     <details><summary>Does the engine trade for me?</summary><p>No. You place every trade yourself on Polymarket, from your own account. The engine and Your Engine only tell you what they see and size it for your stake. Your money never leaves your wallet. New to Polymarket? Section 09 and the Start tab in the app walk you through it.</p></details>
     <details><summary>What is coming next?</summary><p>A new piece every few days. Each one is announced the day it switches on, and it shows up in the Updates section above the moment it does. Nothing is announced before it works.</p></details>
+    <details data-feature="ai" hidden><summary>Do I need $ODDS for the AI models?</summary><p>You pay for the AI models with $ODDS: top up once, then every message is taken from your balance in dollars. Holding more $ODDS lowers your fee.</p></details>
+    <details data-feature="x402usdc" hidden><summary>Does OddsEngine burn $ODDS?</summary><p>Yes. When AI agents pay in USDC, our margin buys $ODDS and half of every buy is burned. Every buy and burn is listed with its transaction on <a href="https://public.oddsengine.live/burn" target="_blank" rel="noopener">public.oddsengine.live/burn</a>.</p></details>
     <details><summary>Do I need $ODDS to use the app?</summary><p>No. Without $ODDS you see one free call a day, every result and the full record. $ODDS unlocks every call live.</p></details>
     <details><summary>Is $ODDS an investment?</summary><p>No. It is a key to a product. $ODDS is paired with $TORCH and has a 3% buy tax, set at launch: 1.05% of every buy goes to holders, paid out by the Torch contract based on how much and how long you hold, and claimed in the Torch terminal. 1.05% goes to the creator, 0.9% to Torch. OddsEngine itself pays nothing out, there is no staking, and nobody can promise you anything about the price.</p></details>
     <details><summary>Why Robinhood Chain?</summary><p>It is where we launch, through Torch. And it is EVM, so the same wallet holds your $ODDS and trades on Polymarket.</p></details>
