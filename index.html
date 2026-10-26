@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>OddsEngine Docs</title>
-<meta name="description" content="How OddsEngine works: the calls, the record, 460+ AI models, AI agents, buyback and burn, the $ODDS key on Robinhood Chain, wallets, tiers and the rules.">
+<meta name="description" content="How OddsEngine works: the calls, the record, Your Engine (token scans, Wallet Guard, Bag Watch), 460+ AI models, AI agents, buyback and burn, the $ODDS key on Robinhood Chain, wallets, tiers and the rules.">
 <meta name="theme-color" content="#05070b">
 <link rel="canonical" href="https://docs.oddsengine.live/">
 <meta property="og:type" content="website">
@@ -153,6 +153,12 @@ body.torch .tier.hot{border-color:rgba(62,240,160,.5);box-shadow:0 0 0 1px rgba(
   <a href="#ai" data-feature="ai" hidden>460+ AI models</a>
   <a href="#agents" data-feature="x402" hidden>For AI agents</a>
   <a href="#burn" data-feature="x402usdc" hidden>Buyback and burn</a>
+  <h4 data-feature="engine" hidden>YOUR ENGINE</h4>
+  <a href="#ye" data-feature="engine" hidden>What it does</a>
+  <a href="#ye-scan" data-feature="scan" hidden>Token scan</a>
+  <a href="#ye-guard" data-feature="guard" hidden>Wallet Guard and alerts</a>
+  <a href="#ye-follow" data-feature="engine" hidden>Follow, files, videos</a>
+  <a href="#ye-groups" data-feature="group_scan" hidden>Groups and Shield</a>
   <h4>MORE</h4>
   <a href="#next">Updates</a>
   <a href="#faq">FAQ</a>
@@ -166,6 +172,7 @@ body.torch .tier.hot{border-color:rgba(62,240,160,.5);box-shadow:0 0 0 1px rgba(
     <h1>How OddsEngine works.</h1>
     <p class="lead">An engine that forecasts the daily high in about 50 cities and compares it with the prices on Polymarket. When the market looks off, it makes a call. Every result gets posted, hit or miss.</p>
     <p class="lead" data-feature="ai" hidden style="margin-top:10px">On top of that: 460+ AI models in one place, paid per use with $ODDS, for people and for AI agents.</p>
+    <p class="lead" data-feature="engine" hidden style="margin-top:10px">And Your Engine: a personal AI agent in Telegram and as an app. It scans any token, watches your wallets and bags, and tells you when something moves.</p>
   </div>
 
   <section id="what">
@@ -339,13 +346,86 @@ Honest odds · 77%
     <p>Every buy and every burn is public, with links to the transactions. Watch it live on <a href="https://public.oddsengine.live/burn" target="_blank" rel="noopener">public.oddsengine.live/burn</a>, together with the total $ODDS burned so far.</p>
   </section>
 
+  <section id="ye" data-feature="engine" hidden>
+    <h2><span class="n">YE</span>Your Engine</h2>
+    <p>Your Engine is a personal AI agent. It lives in Telegram as <a href="https://t.me/OddsEnginePublicBot" target="_blank" rel="noopener">@OddsEnginePublicBot</a> and as an app at <a href="https://engine.oddsengine.live" target="_blank" rel="noopener">engine.oddsengine.live</a>. You talk to it like to a person, by text<span data-feature="voice" hidden> or voice message</span>. It reads the chain, the markets and the news, remembers what matters to you, and works in the background while you do something else.</p>
+    <ol>
+      <li>Open <a href="https://engine.oddsengine.live" target="_blank" rel="noopener">engine.oddsengine.live</a> and connect your wallet. You sign one message, no transaction.</li>
+      <li>Top up with $ODDS. Your balance is kept in dollars.</li>
+      <li>Link Telegram from the app, or open the bot and tap Start. Inside Telegram the app logs you in by itself.</li>
+    </ol>
+    <ul>
+      <li><b>Pay per use:</b> every answer and every background job is taken from your balance, with the price shown. You pick the model it thinks with. No subscription.</li>
+      <li><b>As an app:</b> on your phone, open engine.oddsengine.live and add it to your home screen. It opens like an app, with push alerts if you switch them on.</li>
+      <li><b>Everyday help:</b> a morning briefing, reminders, a watchlist, web search, and it remembers what you tell it.</li>
+      <li><b>Your keys stay yours:</b> Your Engine never asks for a seed phrase and never holds your funds. Everything it watches, it reads from the public chain.</li>
+    </ul>
+    <p>Your Engine is in open beta. Found a bug? Write <code>/support</code> and what happened, screenshots welcome.</p>
+  </section>
+
+  <section id="ye-scan" data-feature="scan" hidden>
+    <h2><span class="n">YE</span>Token scan</h2>
+    <p>Send Your Engine a contract address. It works on Robinhood Chain and Solana, plus Base, Ethereum and BNB Chain. A first card comes back in seconds. The deep check (bundles, wallets, forwards) follows in the same message: while it runs, the card says so, and a token never shows as clean before that check is done.</p>
+    <ul>
+      <li><b>Deep scan:</b> bundled supply, wallet groups that bought together, fresh wallets, same funder, snipers.</li>
+      <li><b>Dev check:</b> what the dev still holds, and what he moved, sold, locked or burned. If he sent his bag to other wallets, you see where it went and what those wallets still hold.</li>
+      <li><b>Forwards:</b> tokens that early buyers or the dev sent on to other wallets, and how much those receivers still hold.</li>
+      <li><b>Prepared wallets:</b> wallets that were set up shortly before launch with almost no history and then bought early.</li>
+      <li><b>Narrative radar:</b> other coins with the same name, and whether the narrative is running right now.</li>
+      <li><b>Project research:</b> one tap reads the website, docs, X, Telegram and GitHub, checks if the contract appears on the site, and shows if the DexScreener page is paid.</li>
+    </ul>
+    <p>On Robinhood Chain and Solana, known token lockers are recognised as locks. On other chains a transfer into an unknown contract shows as "into a contract (lock or sale)", because from the chain alone it can be either.</p>
+    <div class="card amber"><p style="margin:0">A scan shows what is on the chain right now. It is not a safety guarantee. A clean scan can still go to zero.</p></div>
+  </section>
+
+  <section id="ye-guard" data-feature="guard" hidden>
+    <h2><span class="n">YE</span>Wallet Guard and alerts</h2>
+    <p>Wallet Guard watches the wallets you link. It works with any wallet app (MetaMask, Rabby, Phantom and others), because it only reads the address on chain.</p>
+    <ul>
+      <li><b>Approvals:</b> sees every approval your wallet has given and flags the risky ones, so you can cut them before a drainer uses them. Nobody can stop or reverse a drain once it happened. This is how you prevent one.</li>
+      <li><b>Wallet watch:</b> tells you when tokens or ETH leave your wallet.</li>
+      <li><b>Bag Watch:</b> for every coin you hold, alerts when the dev sells, moves or locks, when liquidity is pulled, when a top holder dumps, or when a lock runs out.</li>
+      <li><b>Forward alerts:</b> tap <b>Alert me when forwarded wallets sell or lock</b> under a scan. Your Engine then watches every wallet that got tokens from the dev or early buyers. If one of them sends tokens on, the new wallet gets watched too.</li>
+      <li><b>Exit Coach:</b> checks your positions against your entry and messages you at +50%, 2x, 3x, 6x and 11x, at -30%, -50% and -75%, and when a runner gives back half of its gain. You can set your entry and your own marks. It suggests a plan and never sells for you.</li>
+      <li><b>Wallet Tracker:</b> follow any wallet, on EVM chains and Solana: every buy, sell, swap and transfer, sent to Telegram. Up to 10 wallets.</li>
+    </ul>
+  </section>
+
+  <section id="ye-follow" data-feature="engine" hidden>
+    <h2><span class="n">YE</span>Follow, files, videos</h2>
+    <ul>
+      <li><b>X accounts:</b> "tell me when @name posts". Every new post comes with a two sentence summary and the link. About half a cent per post.</li>
+      <li><b>YouTube channels:</b> "follow this channel" with the channel link or any of its videos. Every new video comes with a summary in two or three sentences. Send a single video link and it summarizes that one.</li>
+      <li><b>News:</b> public Telegram channels, RSS feeds and official sources, live or in your morning briefing.</li>
+      <li><b>Files:</b> send a PDF, Word file, text, CSV or JSON. It summarizes it, or does what you write with it ("what are the tokenomics?"). Up to 20 MB.</li>
+      <li><b>Pictures:</b> send a screenshot or a photo and ask about it.</li>
+    </ul>
+  </section>
+
+  <section id="ye-groups" data-feature="group_scan" hidden>
+    <h2><span class="n">YE</span>Groups and Shield</h2>
+    <p>Add <a href="https://t.me/OddsEnginePublicBot" target="_blank" rel="noopener">@OddsEnginePublicBot</a> to your Telegram group and make it an admin, so it can read the chat.</p>
+    <ul>
+      <li><b>Scans in the group:</b> post a contract address and the scan card lands in the chat.</li>
+      <li><b>Follow up:</b> for 24 hours after a scan, if the dev moves or a big holder dumps, Your Engine posts the update as a reply to that scan.</li>
+      <li><b>Shield:</b> warns about fake admins (names that copy a real admin), scam messages (seed phrase requests, "DM me for support", drainer links, copies of your website) and fake contract addresses for your ticker.</li>
+    </ul>
+    <p>Admin commands:</p>
+    <ul>
+      <li><code style="word-break:normal;white-space:nowrap">/setca 0x...</code> your real contract address, so fake ones get flagged</li>
+      <li><code style="word-break:normal;white-space:nowrap">/setsite yourdomain.com</code> your real website, so look alike links get flagged</li>
+      <li><code style="word-break:normal;white-space:nowrap">/shield delete</code> delete clear scams instead of only warning</li>
+      <li><code style="word-break:normal;white-space:nowrap">/shield on</code> or <code style="word-break:normal;white-space:nowrap">/shield off</code> switch Shield on or off</li>
+    </ul>
+  </section>
+
   <section id="next">
     <h2><span class="n">11</span>Updates</h2>
     <p>Every update below is already running inside the engine. It appears here the moment it is switched on for holders.</p>
 
     <div data-feature="agent" hidden>
-    <h3>Your Engine</h3>
-    <p>A personal agent in Telegram for every holder. You set your cities, your stake and how much risk you like. It sends you the calls that fit, works out the split for your stake, and keeps score of every pick. Every Sunday it sends your week and tells you which cities work for you and which do not.</p>
+    <h3>Your Engine: weather calls</h3>
+    <p>Your Engine also brings the weather engine to every holder in Telegram. You set your cities, your stake and how much risk you like. It sends you the calls that fit, works out the split for your stake, and keeps score of every pick. Every Sunday it sends your week and tells you which cities work for you and which do not.</p>
     <p>Commands: <code>/me</code> your tier, rules and record · <code>/stake 25</code> · <code>/cities paris, seoul</code> or <code>/cities all</code> · <code>/drop_seoul</code> · <code>/risk safe</code> · <code>/reads on</code> also sends READ calls · <code>/quiet 23-7</code> with <code>/tz +2</code> · <code>/pause</code> · <code>/join</code> · <code>/unlink</code></p>
     <p>Your Engine never holds your money and has no access to your wallet. You buy on Polymarket yourself, or just follow along and it tracks how your picks would have gone.</p>
     </div>
@@ -407,7 +487,10 @@ Honest odds · 77%
     <details><summary>Is $ODDS an investment?</summary><p>No. It is a key to a product. $ODDS is paired with $TORCH and has a 3% buy tax, set at launch: 1.05% of every buy goes to holders, paid out by the Torch contract based on how much and how long you hold, and claimed in the Torch terminal. 1.05% goes to the creator, 0.9% to Torch. OddsEngine itself pays nothing out, there is no staking, and nobody can promise you anything about the price.</p></details>
     <details><summary>Why Robinhood Chain?</summary><p>It is where we launch, through Torch. And it is EVM, so the same wallet holds your $ODDS and trades on Polymarket.</p></details>
     <details><summary>Can I use Phantom?</summary><p>Phantom can sign in, but it does not show Robinhood Chain balances. MetaMask or Rabby are the easier choice.</p></details>
-    <details><summary>The app says my session expired.</summary><p>Sessions last 7 days. Tap verify again and sign once more.</p></details>
+    <details><summary>The app says my session expired.</summary><p>Sessions last 7 days. Tap verify again and sign once more. Inside Telegram, Your Engine logs you in by itself once your wallet is linked.</p></details>
+    <details data-feature="engine" hidden><summary>Can Your Engine move my money?</summary><p>No. It never asks for a seed phrase or a private key and never holds your funds. It reads public chain data and sends you messages. Every trade and every approval you cut, you sign yourself.</p></details>
+    <details data-feature="engine" hidden><summary>What does Your Engine cost?</summary><p>You pay per use from your balance, topped up with $ODDS. The price of each answer depends on the model you pick and is shown before you use it. Exit Coach and most alerts need no AI and cost nothing. Everything in the background pauses when your balance is empty.</p></details>
+    <details data-feature="scan" hidden><summary>The scan said nothing bad. Is the coin safe?</summary><p>No scan can tell you that. It shows bundles, dev moves, forwards and the project behind the coin as they are right now. Things can change a minute later, which is why Bag Watch keeps watching after you buy.</p></details>
     <details><summary>Where do I ask questions?</summary><p>On <a href="https://t.me/OddsEngine" target="_blank" rel="noopener">Telegram</a> or <a href="https://x.com/OddsEngine" target="_blank" rel="noopener">X</a>. We never DM first and never ask for your recovery phrase.</p></details>
   </section>
 
