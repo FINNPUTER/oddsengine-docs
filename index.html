@@ -460,6 +460,41 @@ Honest odds · 77%
     <p>At set points in every window the engine's number and the market price are written down and scored once the window settles, so you can see who called it better. These are tracked picks, not orders. You trade on Polymarket yourself.</p>
     </div>
 
+    <div data-feature="options" hidden>
+    <h3>Above X: Bitcoin and ETH price markets</h3>
+    <p>Kalshi and Polymarket run markets like <i>"Will Bitcoin be above $97,000 when the market closes?"</i>, every hour and every day, for many price levels at once. Each one is a simple yes or no that pays $1 if it comes true.</p>
+    <p>The engine calculates its own fair price for every one of these markets, all day, and compares it with the price on the exchange. When the market is clearly off, the engine makes a call on the side the market got wrong. Every call is locked at the live price the moment it is made and scored on the exchange's own result, fees included. Nothing is cherry picked.</p>
+    <p>A single call can lose. The engine is not right every time, it is right often enough on the price. That is why it is scored over thousands of calls, not one.</p>
+    </div>
+
+    <div data-feature="options_calls" hidden>
+    <h3>Above X calls</h3>
+    <p>Only the strongest Above X calls go out live, at most one per market close. Each call shows the question, the side (YES or NO), the price, the engine's fair price and how long until the market closes, with a button straight to the market on Kalshi. When the market settles, the result follows as a reply under the call: hit or miss, and what it paid.</p>
+    <p>The live record counts every call that went out, from the first one, at the price in the call: <a href="https://web-production-6b61c.up.railway.app/v1/options/calls/record" target="_blank" rel="noopener">Above X calls record</a>.</p>
+    <p>To trade a call you need your own Kalshi account. Kalshi is a US regulated exchange: it asks for ID (KYC) and is not available in every country. Check that it is available where you live before you sign up.</p>
+    </div>
+
+    <div data-feature="options_autotrade" hidden>
+    <h3>Auto mode (invite only beta)</h3>
+    <p>A small group of invited testers lets the engine trade the Above X calls for them, automatically, without opening the app.</p>
+    <ol>
+      <li>You open your own Kalshi account, finish their ID check and deposit yourself.</li>
+      <li>In Kalshi you create an API key (Account &amp; security, API Keys) and hand it to us privately.</li>
+      <li>You set your limits: how much per call and how much per day, and which coins.</li>
+      <li>On every new call the engine buys the side of the call in your account, at the call price or at most 1 cent above. If the price has already moved further, nothing is bought. There is no buying more later and no selling: the position runs until the market closes.</li>
+      <li>You get a Telegram message for every buy and for every result.</li>
+    </ol>
+    <p>The engine never holds your money. Everything stays in your own Kalshi account. You can stop at any time by deleting the API key in Kalshi. Whoever holds the key can trade in your account, so only hand it over if you trust us with that, and only put in money you are fine with losing.</p>
+    </div>
+
+    <div data-feature="rotation" hidden>
+    <h3>Meta Rotation</h3>
+    <p>Memecoins move in themes: AI, cats, dogs, politics and so on. The money usually moves first through a small group of wallets that keep getting in early on the coins that run.</p>
+    <p>Meta Rotation only counts proven wallets: a wallet that bought a coin at 500K market cap or less, and that coin then ran 20x or more from its entry. Every one of these entries is checked by the engine itself on the chart, from the wallet's own buy. Bundles, snipers and the dev's own wallets never count. The engine also finds new proven wallets on its own, from coins that just ran.</p>
+    <p>When three or more proven wallets with different funding sources move into a theme they were not in before, verified $ODDS holders get an alert in Telegram and in the app: from which theme to which, which coins, and the best proven entry as proof. Wallet addresses are never shown.</p>
+    <p>Every alert is stored with the market cap of each coin at the moment it went out and followed afterwards. The public record is here: <a href="https://web-production-6b61c.up.railway.app/v1/rotation/record" target="_blank" rel="noopener">Meta Rotation record</a>.</p>
+    </div>
+
     <div data-feature="agents" hidden>
     <h3>Agent keys and MCP</h3>
     <p>Developers can give their agents their own API keys with a daily spending limit and a list of allowed models, created by a wallet signature without a browser. Claude, Cursor and other MCP clients can connect to OddsEngine directly as a tool. Details are in the <a href="https://engine.oddsengine.live/docs.html#agents" target="_blank" rel="noopener">developer docs</a>.</p>
@@ -499,7 +534,9 @@ Honest odds · 77%
     <ul>
       <li>Prediction markets can lose you your whole stake. A call that misses pays nothing.</li>
       <li>Past results do not predict future ones. Weather and markets change.</li>
-      <li>Prices on Polymarket move. The price in a call may be gone when you get there.</li>
+      <li>Prices on Polymarket and Kalshi move. The price in a call may be gone when you get there.</li>
+      <li>Kalshi and Polymarket are not available in every country, and Kalshi asks for ID. Using them where they are not allowed is your risk.</li>
+      <li>In Auto mode the engine trades with your API key in your own account. A key in someone else's hands can be misused, and automatic trading can lose your whole balance on the exchange.</li>
       <li>Weather stations can report late, report a different value than expected, or be corrected afterwards. The market settles on what Polymarket's rules say.</li>
       <li>$ODDS can lose value. Only hold what you are fine with losing.</li>
       <li>Smart contracts, bridges and wallets carry their own risks.</li>
@@ -509,7 +546,7 @@ Honest odds · 77%
   <section id="terms">
     <h2><span class="n">14</span>Terms</h2>
     <p>OddsEngine publishes information about weather forecasts and market prices. Nothing on the website, in the app, on X or on Telegram is financial, investment or legal advice, and nothing is an offer to buy or sell anything. You decide what you do with it, and you carry the risk.</p>
-    <p>OddsEngine never holds user funds and never places trades for you. Bets are placed by you, from your own wallet, on Polymarket, under Polymarket's terms. It is your job to check that using Polymarket and holding $ODDS is legal where you live.</p>
+    <p>OddsEngine never holds user funds. Trades happen in your own wallet or your own exchange account, under the terms of Polymarket or Kalshi. Normally you place them yourself. Only in the invite only Auto mode beta does the engine place them for you, with an API key you created, within limits you set, and you can delete that key at any time. It is your job to check that using Polymarket or Kalshi and holding $ODDS is legal where you live.</p>
     <p>$ODDS gives access to features of the app for as long as you hold it. It carries no ownership, no share of revenue and no claim against anyone. Tier lines, features and the free call can change. The service is provided as is, without any guarantee that it is available, correct or complete.</p>
   </section>
 </main>
