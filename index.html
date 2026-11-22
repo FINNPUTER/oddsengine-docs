@@ -508,6 +508,10 @@ Honest odds · 77%
     <div data-feature="agents" hidden>
     <h3>Agent keys and MCP</h3>
     <p>Developers can give their agents their own API keys with a daily spending limit and a list of allowed models, created by a wallet signature without a browser. Claude, Cursor and other MCP clients can connect to OddsEngine directly as a tool. Details are in the <a href="https://engine.oddsengine.live/docs.html#agents" target="_blank" rel="noopener">developer docs</a>.</p>
+    <p><b>Safety checks for agents.</b> Over MCP an agent can run the same checks as Your Engine: <code>scan_token</code> before it buys and <code>check_before_sign</code> before it signs, plus <code>wallet_approvals</code>, <code>trace_wallet</code>, <code>money_out</code> and <code>drain_report</code>. They only read the chain and never move funds. The server is <code style="word-break:break-all">https://api.oddsengine.live/mcp</code>.</p>
+    <p><b>Checking a payment.</b> An agent that pays from a wallet can hand the recipient to <code>check_before_sign</code>, together with its list of approved payees and its limit per payment. It gets back DO NOT SIGN, CAREFUL or LOOKS NORMAL with the reasons: the recipient is not on the list, the amount is over the limit, the address is a look-alike of an approved payee, it is in our records for draining wallets, or it is brand new and empty. A verdict is a warning, not a guarantee.</p>
+    <p><b>What it costs.</b> Each safety check costs $0.02 from your OddsEngine balance. AI model calls are priced per model, and holders pay a lower fee on them.</p>
+    <p><b>Who can use it.</b> MCP is open to wallets that hold 250,000 $ODDS or more, linked wallets count. Users who come through the link of a partner app get access without holding and pay per call.</p>
     </div>
 
     <h3>Getting in</h3>
