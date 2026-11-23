@@ -158,6 +158,7 @@ body.torch .tier.hot{border-color:rgba(62,240,160,.5);box-shadow:0 0 0 1px rgba(
   <a href="#ye-scan" data-feature="scan" hidden>Token scan</a>
   <a href="#ye-guard" data-feature="guard" hidden>Wallet Guard and alerts</a>
   <a href="#ye-follow" data-feature="engine" hidden>Follow, files, videos</a>
+  <a href="#ye-shop" data-feature="shop" hidden>Shop</a>
   <a href="#ye-groups" data-feature="group_scan" hidden>Groups and Shield</a>
   <h4>MORE</h4>
   <a href="#next">Updates</a>
@@ -402,6 +403,37 @@ Honest odds · 77%
     </ul>
   </section>
 
+  <section id="ye-shop" data-feature="shop" hidden>
+    <h2><span class="n">YE</span>Shop: spend your crypto</h2>
+    <p>Tell Your Engine what you want to buy<span data-feature="voice" hidden>, by text or voice message</span>. It finds it, shows you a receipt and sets up the payment. You pay from your own wallet and the code arrives in the chat. Purchases run through Bitrefill.</p>
+    <ol>
+      <li><b>Ask.</b> "Buy me a 10 euro Amazon gift card for Spain, send the code to my@mail.com".</li>
+      <li><b>Check the receipt.</b> Product, value, price in dollars, where the code goes and your limit. Nothing is paid at this point.</li>
+      <li><b>Say yes.</b> Your Engine creates the invoice and shows the exact amount and the address. The price is locked for 60 minutes.</li>
+      <li><b>Pay from your own wallet.</b> On a phone with the MetaMask app, the "Pay in MetaMask" button opens the transfer with the amount filled in. On a computer, copy the address and the amount into your wallet.</li>
+      <li><b>Get the code.</b> It lands in the chat and in your mailbox as soon as the payment is confirmed.</li>
+    </ol>
+    <h3>What you need</h3>
+    <ul>
+      <li>Your Engine with a linked wallet, the same access as for everything else here. No extra sign-up and no approval.</li>
+      <li>A wallet with crypto to pay. USDC on Base is the default. If you hold something else, say so and Your Engine sets up the invoice for it.</li>
+      <li>An email address for the code.</li>
+    </ul>
+    <h3>What it costs</h3>
+    <p>OddsEngine adds no fee. You pay the price the shop shows on the receipt. Messages to Your Engine cost the same as always.</p>
+    <h3>Limits</h3>
+    <p>$50 per purchase and $100 per day. You can set your own limit lower: "set my shop limit to 20 dollars". A purchase over your limit is refused before any invoice exists.</p>
+    <h3>Good to know</h3>
+    <ul>
+      <li>Your Engine never holds your money and never asks for keys. Every payment is signed by you.</li>
+      <li>Codes cannot be refunded. Check the receipt before you say yes.</li>
+      <li>A gift card only works in its own country. An Amazon card for Spain is redeemed on amazon.es.</li>
+      <li>Treat the code like cash. Do not share the message or a screenshot of it.</li>
+      <li>Send exactly the amount, in the token and on the network the invoice names. Anything else can be lost.</li>
+      <li>Gift cards are the tested path. eSIMs are in the catalog too and newer, so start small.</li>
+    </ul>
+  </section>
+
   <section id="ye-groups" data-feature="group_scan" hidden>
     <h2><span class="n">YE</span>Groups and Shield</h2>
     <p>Add <a href="https://t.me/OddsEnginePublicBot" target="_blank" rel="noopener">@OddsEnginePublicBot</a> to your Telegram group and make it an admin, so it can read the chat.</p>
@@ -422,6 +454,11 @@ Honest odds · 77%
   <section id="next">
     <h2><span class="n">11</span>Updates</h2>
     <p>Every update below is already running inside the engine. It appears here the moment it is switched on for holders.</p>
+
+    <div data-feature="shop" hidden>
+    <h3>Shop: spend your crypto by text</h3>
+    <p>Your Engine can now buy gift cards for you. One message, one yes, and you pay from your own wallet. No fee from OddsEngine, and it never holds your money. <a href="#ye-shop">How it works</a>.</p>
+    </div>
 
     <div data-feature="agent" hidden>
     <h3>Your Engine: weather calls</h3>
